@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding=utf8
 
-import sys
-
 import re
 
 PREFACE_RE = re.compile(
@@ -74,10 +72,9 @@ class Screener(object):
         self.colno = 0
         self.inside_string = False
         self._newline = False
+        self.escaped = False
 
     def __iter__(self):
-        escaped = False
-
         def _getch():
             if self._newline:
                 self.lineno += 1
@@ -97,18 +94,18 @@ class Screener(object):
             c = _getch()
 
         while True:
-            if escaped:
-                escaped = False
+            if self.escaped:
                 if '\n' != c:
                     # escaped newlines simply disappear
                     yield self.escape_char
                     yield c
                 c = _getch()
+                self.escaped = False
                 continue
 
             # not escaped:
             if self.escape_char == c:
-                escaped = True
+                self.escaped = True
                 c = _getch()
                 continue
             elif self.string_delim == c:
@@ -132,8 +129,3 @@ class Screener(object):
             yield c
             c = _getch()
             continue
-
-gen = Screener(sys.stdin.read())
-
-for c in gen:
-    sys.stdout.write(c)
