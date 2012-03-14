@@ -13,9 +13,9 @@ from exc import TokenizerError
 KEYWORDS = ('LC_IDENTIFICATION', 'LC_CTYPE', 'LC_COLLATE', 'LC_TIME',
             'LC_NUMERIC', 'LC_MONETARY', 'LC_MESSAGES', 'LC_PAPER', 'LC_NAME',
             'LC_ADDRESS', 'LC_TELEPHONE', 'END', 'escape_char', 'comment_char',
-            'translit_start', 'translit_end', 'include', 'copy')
+            'translit_start', 'translit_end', 'include', 'copy', 'IGNORE')
 
-_U_RE = re.compile('<U([0-9A-F]{4})>')
+_U_RE = re.compile('<U([0-9A-F]+)>')
 def _uni_sub(s):
     def _u_repl(m):
         code_point = int(m.group(1), 16)
