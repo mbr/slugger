@@ -25,9 +25,8 @@ def strip_comments(comment_char, escape_char, string_delim, i):
         elif string_delim == c:
             inside_string = not inside_string
         elif comment_char == c and not inside_string:
-            while i.next() != '\n':
-                pass
-            c = '\n'
+            while c != '\n':
+                c = i.next()
 
         yield c
 
@@ -121,7 +120,7 @@ class Screener(object):
                     yield '\n'
                     continue
                 elif c.isspace():
-                    while c.isspace():
+                    while c.isspace() and c != '\n':
                         c = _getch()
                     yield ' '
                     continue
