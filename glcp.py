@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 # coding=utf8
 
+
+import bz2
 import os
 import sys
 
 import logbook
 import logbook.more
+
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 try:
     from remember.memoize import memoize
@@ -18,10 +25,10 @@ except ImportError:
             return f
         return _wrap
 
-from tokenize import Tokenizer
-from preprocess import Screener
-from parser import TranslitParser
-from exc import LException
+from glibcparse.tokenize import Tokenizer
+from glibcparse.preprocess import Screener
+from glibcparse.parser import TranslitParser
+from glibcparse.exc import LException
 
 log = logbook.Logger('main')
 
@@ -37,7 +44,7 @@ def _parse_translit(fn):
 
         def parse_func(new_fn):
             full_fn = os.path.join(dirname, new_fn)
-            return parse_translit(full_fn)
+            return parse_translit(full_fn)[0]
 
         p = TranslitParser(parse_func, tok)
 
@@ -52,7 +59,7 @@ def _parse_translit(fn):
             ))
             sys.exit(1)
 
-        return p.ttbl
+        return p.ttbl, p
 
 
 if '__main__' == __name__:
@@ -64,6 +71,12 @@ if '__main__' == __name__:
         parser.add_argument('--debug', '-d', action='store_const',
                             dest='loglevel', const=logbook.DEBUG,
                             default=logbook.INFO)
+        parser.add_argument('--output-dir', '-o',
+                            default=os.path.join(
+                                os.path.dirname(__file__),
+                                'slugger/localedata'))
+        parser.add_argument('--no-compression', '-C', dest='compress',
+                            default=True, action='store_false')
 
         args = parser.parse_args()
         logbook.NullHandler().push_application()
@@ -76,10 +89,28 @@ if '__main__' == __name__:
                       'program will still work, but large jobs will run about'\
                       ' 10x slower')
 
+        log.info('Storing output in %s' % args.output_dir)
+
         for fn in args.files:
             if args.preprocess_only:
                 with open(fn) as f:
                     for c in Screener(f.read()):
                         sys.stdout.write(c)
             else:
-                ttbl = parse_translit(fn)
+                ttbl, parser = parse_translit(fn)
+                if not parser.has_LC_IDENITIFCATION:
+                    log.warning('No LC_IDENTIFICATION in "%s", skipping' %\
+                                fn)
+                else:
+                    ext = '.ttbl' if not args.compress else '.ttbl.bz2'
+                    out_fn = os.path.join(
+                        args.output_dir,
+                        os.path.basename(fn) + ext)
+                    log.info('Writing output to %s' % out_fn)
+
+                    outfile = open(out_fn, 'w') if not args.compress else\
+                              bz2.BZ2File(out_fn, 'w', 1024**2, 9)
+                    try:
+                        pickle.dump(ttbl, outfile, pickle.HIGHEST_PROTOCOL)
+                    finally:
+                        outfile.close()

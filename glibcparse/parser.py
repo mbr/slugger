@@ -67,6 +67,13 @@ class TranslitParser(BlockParser):
         self.parse_func = parse_func
         self.ttbl = {}
 
+        self.has_LC_IDENITIFCATION = False
+
+    def handle_LC_IDENTIFICATION(self, tokens):
+        self.has_LC_IDENITIFCATION = True
+        for t in tokens:
+            pass
+
     def handle_LC_CTYPE(self, tokens):
         self.log.debug('enter LC_CTYPE')
         inside_translit = False
