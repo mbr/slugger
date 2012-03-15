@@ -11,7 +11,7 @@ def read(fname):
 
 
 setup(name='slugger',
-      version='0.1dev',
+      version='0.1',
       description="""Slugging done right. Tries to support close to 300
                      languages.""",
       long_description=read('README.rst'),
