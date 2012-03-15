@@ -1,2 +1,3 @@
 # allow having a glibc checkout in the repository
 glibc/
+slugger/localedata/
