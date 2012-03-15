@@ -217,6 +217,9 @@ class Slugger(object):
 
         title = self.invalid_exp.sub(self.invalid_replacement, title)
 
+        # remove trailing/leading chars
+        title = title.strip(self.invalid_replacement)
+
         return title
 
     def init_subst(self):
