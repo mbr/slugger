@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding=utf8
 
+"""Main slugger module. See the docstring of Slugger for details."""
+
 import bz2
 import imp
 import re
@@ -122,6 +124,38 @@ class Slugger(object):
                  maxlength=100,
                  invalid_pattern='[^A-Za-z-]+',
                  invalid_replacement='-'):
+        """Creates a new configuration for slugging.
+
+        Note that creating Slugger instances can be expensive, if possible it
+        should be avoided to repeat creating these everytime a slug is needed
+        with the same configuration.
+
+        :param lang: The language to use. Expects a language or
+                     language_TERRITORY code, like 'de' or 'de_DE' (German,
+                     German in Germany) or 'jp_JA' (Japanese in Japan).
+
+                     If a language is not found, errors are silently swallowed
+                     and the Slugger falls back to a basic default language.
+        :param chain: A chain of operations. Each language comes with a default
+                      chain, a list of strings. Upon instantiation,
+                      init_CHAINNAME methods are called, while
+                      :py:method:`sluggify` will call do_CHAINNAME to do its
+                      work.
+        :param hanlang: The language to use for transcribing chinese
+                        characters, which are used in numerous asian languages.
+                        This is mainly used when you have mixed-language input
+                        and want better control, e.g. when having an English
+                        text with Kanji mixed in and you want them interpreted
+                        as Japanese, not Chinese.
+        :param lowercase: Convert slug to lowercase..
+        :param maxlength: Maximum length. Slugger will cut the slug short,
+                          trying to keep words intact if possible.
+        :param invalid_pattern: In the final step, this regular expression is
+                                used to find invalid characters which are
+                                replaced with *invalid-replacement*.
+        :param invalid_replacement: The replacement for *invalid-pattern*-found
+                                    characters.
+        """
         self.lang = lang
         self.hanlang = hanlang
         self.lowercase = lowercase
@@ -212,6 +246,10 @@ class Slugger(object):
         self.invalid_exp = re.compile(self.invalid_pattern)
 
     def sluggify(self, title):
+        """Turn *title* into a slug.
+
+        This will run the whole chain and return the end result of the
+        transformation."""
         title = unicode(title)
         for process in self.chain:
             title = getattr(self, 'do_%s' % process)(title)
