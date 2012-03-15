@@ -114,9 +114,20 @@ def _compile_rpl_exp(tbl):
 
 
 class Slugger(object):
-    def __init__(self, lang, chain=None, hanlang=None):
+    def __init__(self,
+                 lang,
+                 chain=None,
+                 hanlang=None,
+                 lowercase=True,
+                 maxlength=100,
+                 invalid_pattern='[^A-Za-z-]+',
+                 invalid_replacement='-'):
         self.lang = lang
         self.hanlang = hanlang
+        self.lowercase = lowercase
+        self.maxlength = maxlength
+        self.invalid_pattern = invalid_pattern
+        self.invalid_replacement = invalid_replacement
 
         # load the language
         try:
@@ -141,18 +152,35 @@ class Slugger(object):
             getattr(self, 'init_%s' % process)()
 
     def do_subst(self, title):
-        return title
         return self.subst_sub(title)
 
     def do_ttbl(self, title):
-        return title
         return self.ttbl_sub(title)
 
     def do_unihandecode(self, title):
         return self.unihandecoder.decode(title)
 
     def do_cleanup(self, title):
-        # FIXME: restrict length, characters, etc...
+        if self.lowercase:
+            title = title.lower()
+
+        words = title.split()
+        if words:
+            if len(words[0]) > self.maxlength:
+                return words[0][:self.maxlength]
+
+            total = 0
+            collected = []
+            while words:
+                w = words.pop(0)
+                if len(w) + total < self.maxlength:
+                    total += 1 + len(w)
+                    collected.append(w)
+
+            title = ' '.join(collected)
+
+        title = self.invalid_exp.sub(self.invalid_replacement, title)
+
         return title
 
     def init_subst(self):
@@ -181,7 +209,7 @@ class Slugger(object):
         self.unihandecoder = unihandecode.Unihandecoder(lang=hanlang)
 
     def init_cleanup(self):
-        pass
+        self.invalid_exp = re.compile(self.invalid_pattern)
 
     def sluggify(self, title):
         title = unicode(title)
