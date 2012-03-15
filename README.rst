@@ -86,5 +86,5 @@ you find a generated slug unsatisfactionary, please `let me know
 
 License
 -------
-Slugger is licensed under the LGPL license like glibc, as it uses an integral
+Slugger is licensed under the LGPL license like *glibc*, as it uses an integral
 part of that library (the localedata information).
