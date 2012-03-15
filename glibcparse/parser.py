@@ -150,18 +150,19 @@ class TranslitParser(BlockParser):
                     groups.append(current_group)
 
                 if len(groups) == 1:
-                    lhs = groups[0][0]
-                    rhs = groups[0][1:]
-                elif len(groups) == 2:
-                    lhs = groups[0]
-                    rhs = groups[1]
-                else:
-                    self.log.warning('Unhandled leftover substitutions: '\
-                                     '%s' % groups)
-
+                    assert len(groups[0]) == 2
+                    lhs = [groups[0][0]]
+                    rhs = groups[0][1]
+                elif len(groups) >= 2:
                     # last substition seems to be the simplest
                     lhs = groups[0]
-                    rhs = groups[-1]
+                    rhs = groups[-1][0]
+
+                    assert len(groups[-1]) == 1
+
+                    if len(groups) > 2:
+                        self.log.warning('Unhandled leftover substitutions: '\
+                                         '%s' % groups)
 
                 for l in lhs:
                     self.ttbl[l] = rhs
