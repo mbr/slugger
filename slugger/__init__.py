@@ -3,6 +3,8 @@
 
 """Main slugger module. See the docstring of Slugger for details."""
 
+__version__ = '0.1dev'
+
 import bz2
 import imp
 import re
