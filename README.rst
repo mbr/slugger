@@ -37,8 +37,8 @@ from external languages. These are:
 
 * `glibc <http://en.wikipedia.org/wiki/GNU_C_Library>`_'s locales, the LC_CTYPE
   section
-* `unihandecode https://launchpad.net/unihandecode`_, a fork of `unidecode
-  http://pypi.python.org/pypi/Unidecode/0.04.9`_ that also handles asian
+* `unihandecode <https://launchpad.net/unihandecode>`_, a fork of `unidecode
+  <http://pypi.python.org/pypi/Unidecode/0.04.9>`_ that also handles asian
   languages other than chinese. *unihandecode* itself pulls in three different
   transcription libraries for Korean, Japanese and Chinese.
 
