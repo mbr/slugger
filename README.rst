@@ -58,4 +58,33 @@ Detailed docs are still missing. Here is a quick example::
     s = Slugger('de', hanlang='ja')
     print s.sluggify(u'Hellö & Wörld 漢字')
 
-This will print ``helloe-und-woerld-kan-ji``.
+This will print ``helloe-und-woerld-kan-ji``. The Slugger class itself supports
+a number of construction options, see ``slugger/__init__.py`` for details.
+
+You should not rely on Slugger generating the same slug across different
+versions, as the goal of this library is to steadily improve, either through
+better underlying libraries or fixes in Slugger itself.
+
+Installation
+------------
+You cannot use Slugger straight from a checkout of the repository, as
+*glibc*-localedata has to be parsed and pickled first. When installing a
+release from `PyPi <http://pypi.python.org>`_, this data is already included.
+
+Development
+===========
+Development takes places on `GitHub <https://github.com>`_, see
+<https://github.com/mbr/slugger>.
+
+The ``glcp.py`` script contains a parser for *glibc*-locale files and extracts
+the ``LC_CTYPE`` section to use with the script. Try ``python glcp.py --help``
+for a bit of help.
+
+Any help is welcome, especially contributing new rules for new languages. If
+you find a generated slug unsatisfactionary, please `let me know
+<https://github.com/mbr/slugger>`_.
+
+License
+-------
+Slugger is licensed under the LGPL license like glibc, as it uses an integral
+part of that library (the localedata information).
