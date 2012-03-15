@@ -121,6 +121,12 @@ class TranslitParser(BlockParser):
                 inside_translit = False
                 continue
 
+            if ('KEYWORD', 'default_missing') == t:
+                self.log.debug('skipping default_missing')
+                while token_iter.next() != ('EOL',):
+                    pass
+                continue
+
             if inside_translit and t != ('EOL',):
                 # "ordinary" translit line
                 groups = []

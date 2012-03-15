@@ -13,7 +13,8 @@ from exc import TokenizerError
 KEYWORDS = ('LC_IDENTIFICATION', 'LC_CTYPE', 'LC_COLLATE', 'LC_TIME',
             'LC_NUMERIC', 'LC_MONETARY', 'LC_MESSAGES', 'LC_PAPER', 'LC_NAME',
             'LC_ADDRESS', 'LC_TELEPHONE', 'END', 'escape_char', 'comment_char',
-            'translit_start', 'translit_end', 'include', 'copy', 'IGNORE')
+            'translit_start', 'translit_end', 'include', 'copy', 'IGNORE',
+            'default_missing')
 
 _U_RE = re.compile('<U([0-9A-F]+)>')
 def _uni_sub(s):
