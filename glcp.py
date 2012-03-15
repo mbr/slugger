@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # coding=utf8
 
+"""A script to extract glibc localedata.
+
+Woefully under documented. All its components are found in the glibcparse
+package. If you need a parser for glibc locale files for some reason, this is
+not a bad starting point. Message me on <https://github.com/mbr/slugger> for
+help.
+"""
 
 import bz2
 import os
@@ -64,19 +71,31 @@ def _parse_translit(fn):
 
 if '__main__' == __name__:
         import argparse
-        parser = argparse.ArgumentParser()
-        parser.add_argument('files', metavar='FILE', nargs='+')
+        parser = argparse.ArgumentParser(
+            description="""Parses the provided files, calculates translation
+                           tables and writes them as bzip'ed pickle files to
+                           disc."""
+        )
+        parser.add_argument('files', metavar='FILE', nargs='+',
+                            help="""localedata files to be parsed. Inside a
+                            checkout of the glibc repository, these are usually
+                            as [glibc]/localedata/locales/*""")
         parser.add_argument('--preprocess-only', '-E', action='store_true',
-                            default=False)
+                            default=False, help="""Used to test comment
+                            stripping and folding new lines.""")
         parser.add_argument('--debug', '-d', action='store_const',
                             dest='loglevel', const=logbook.DEBUG,
-                            default=logbook.INFO)
+                            default=logbook.INFO, help="""Show debugging output
+                            while working""")
         parser.add_argument('--output-dir', '-o',
                             default=os.path.join(
                                 os.path.dirname(__file__),
-                                'slugger/localedata'))
+                                'slugger/localedata'), help="""The directory
+                            where generated output should be stored. Defaults
+                            to slugger/localedata.""")
         parser.add_argument('--no-compression', '-C', dest='compress',
-                            default=True, action='store_false')
+                            default=True, action='store_false', help="""Do not
+                            compress resulting files.""")
 
         args = parser.parse_args()
         logbook.NullHandler().push_application()
