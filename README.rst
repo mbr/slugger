@@ -48,3 +48,14 @@ This is done mainly to offset the weaknesses of the respective libraries, as
 specific substitutions at all.
 
 Additional fixes are contained in slugger itself.
+
+Usage
+=====
+Detailed docs are still missing. Here is a quick example::
+
+    from slugger import Slugger
+
+    s = Slugger('de', hanlang='ja')
+    print s.sluggify(u'Hellö & Wörld 漢字')
+
+This will print ``helloe-und-woerld-kan-ji``.
