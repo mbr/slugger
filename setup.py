@@ -1,10 +1,22 @@
+from glob import glob
 import os
 
 from setuptools import setup, find_packages
+from distutils.command.sdist import sdist
 
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+
+# automatically build the localedata when generating an sdist
+class locale_sdist(sdist):
+    def run(self):
+        if not self.dry_run:
+            from slugger.glibcparse.cli import main
+            main(glob('glibc/localedata/locales/*'), standalone_mode=False)
+
+        sdist.run(self)
 
 
 setup(name='slugger',
@@ -30,6 +42,7 @@ setup(name='slugger',
       },
       classifiers=[
           'Programming Language :: Python :: 2',
-          #'Programming Language :: Python :: 3',
-      ]
+          #'Programming Language :: Python :: 3',  # no python 3 support yet
+      ],
+      cmdclass={'sdist': locale_sdist},
       )
