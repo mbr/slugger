@@ -35,12 +35,11 @@ for a bit of help.
 Generating the localedata files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, make sure `click <http://click.pocoo.org>`_ is installed (it is a
-dependency only for the `glcp` tool and will not be installed by default):
+First, make sure the development dependencies are installed:
 
 .. code-block:: sh
 
-   $ pip install click
+   $ pip install click remember logbook
 
 Afterwards, if you haven't done so, checkout the glibc-submodule:
 
