@@ -1,5 +1,3 @@
-"""Main slugger module. See the docstring of Slugger for details."""
-
 __version__ = '0.2dev'
 
 import bz2
