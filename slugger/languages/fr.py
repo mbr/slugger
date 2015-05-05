@@ -1,0 +1,4 @@
+SUBSTITUTION = {
+    '@': 'a',
+    '&': 'et',
+}
