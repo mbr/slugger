@@ -1,6 +1,6 @@
 from logbook import Logger
 
-from exc import ParserError
+from .exc import ParserError
 
 
 class BaseParser(object):
