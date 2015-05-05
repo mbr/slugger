@@ -1,4 +1,4 @@
 SUBSTITUTION = {
-    '@': 'a',
+    '@': 'arobase',
     '&': 'et',
 }
