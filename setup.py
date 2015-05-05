@@ -1,7 +1,7 @@
 import os
-import sys
 
 from setuptools import setup, find_packages
+
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -21,13 +21,7 @@ setup(name='slugger',
       include_package_data=True,
       packages=find_packages(exclude=['glibcparse']),
       classifiers=[
-          'Development Status :: 4 - Beta',
-          'Environment :: Web Environment',
-          'Intended Audience :: Developers',
-          'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
-          'Operating System :: OS Independent',
-          'Topic :: Internet',
-          'Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries',
-          'Topic :: Software Development :: Internationalization',
-     ]
-     )
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 3',
+      ]
+      )
