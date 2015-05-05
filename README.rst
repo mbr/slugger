@@ -16,6 +16,7 @@ ascii-translation. Compare the ``ä``, ``ö`` and ``ü`` in German
 
 .. code-block:: pycon
 
+   >>> s = Slugger(lang='de_DE')
    >>> s.sluggify(u'Türöffner')
    u'tueroeffner'
 
@@ -23,6 +24,7 @@ against Swedish:
 
 .. code-block:: pycon
 
+   >>> s = Slugger(lang='sv_SE')
    >>> s.sluggify(u'Färsk Ägg')
    u'farsk-agg'
 
