@@ -31,6 +31,9 @@ setup(name='slugger',
       url='http://github.com/mbr/slugger',
       license='LGPLv2.1',
       install_requires=['remember', 'unihandecode>=0.50'],
+      package_data={
+          'slugger': ['localedata/*'],
+      },
       packages=find_packages(exclude=['tests']),
       setup_requires = devtools_req,
       extras_require = {
