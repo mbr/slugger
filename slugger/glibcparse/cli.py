@@ -79,35 +79,38 @@ def _parse_translit(fn):
               help='Compress resulting pickled files (default: enabled).')
 @click.argument('files', nargs=-1, required=True,
                 type=click.Path(exists=True, dir_okay=False, writable=False))
-def main(loglevel, preprocess_only, output_dir, files, compress):
+def main(**kwargs):
+    return _main(**kwargs)
+
+
+def _main(loglevel, preprocess_only, output_dir, files, compress):
     if loglevel is None:
         loglevel = logbook.INFO
 
-    logbook.NullHandler().push_application()
-    logbook.more.ColorizedStderrHandler(level=loglevel).push_application()
+    handler = logbook.more.ColorizedStderrHandler(level=loglevel)
+    with logbook.NullHandler().applicationbound(), handler.applicationbound():
+        log.info('Storing output in %s' % output_dir)
 
-    log.info('Storing output in %s' % output_dir)
-
-    for fn in files:
-        if preprocess_only:
-            with open(fn) as f:
-                for c in Screener(f.read()):
-                    sys.stdout.write(c)
-        else:
-            ttbl, parser = parse_translit(fn)
-            if not parser.has_LC_IDENITIFCATION:
-                log.warning('No LC_IDENTIFICATION in "%s", skipping' %
-                            fn)
+        for fn in files:
+            if preprocess_only:
+                with open(fn) as f:
+                    for c in Screener(f.read()):
+                        sys.stdout.write(c)
             else:
-                ext = '.ttbl' if not compress else '.ttbl.bz2'
-                out_fn = os.path.join(
-                    output_dir,
-                    os.path.basename(fn) + ext)
-                log.info('Writing output to %s' % out_fn)
+                ttbl, parser = parse_translit(fn)
+                if not parser.has_LC_IDENITIFCATION:
+                    log.warning('No LC_IDENTIFICATION in "%s", skipping' %
+                                fn)
+                else:
+                    ext = '.ttbl' if not compress else '.ttbl.bz2'
+                    out_fn = os.path.join(
+                        output_dir,
+                        os.path.basename(fn) + ext)
+                    log.info('Writing output to %s' % out_fn)
 
-                outfile = open(out_fn, 'w') if not compress else\
-                    bz2.BZ2File(out_fn, 'w', 1024**2, 9)
-                try:
-                    pickle.dump(ttbl, outfile, pickle.HIGHEST_PROTOCOL)
-                finally:
-                    outfile.close()
+                    outfile = open(out_fn, 'w') if not compress else\
+                        bz2.BZ2File(out_fn, 'w', 1024**2, 9)
+                    try:
+                        pickle.dump(ttbl, outfile, pickle.HIGHEST_PROTOCOL)
+                    finally:
+                        outfile.close()
