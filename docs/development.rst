@@ -32,6 +32,30 @@ the ``LC_CTYPE`` section to use with the script. Try ``python glcp.py --help``
 for a bit of help.
 
 
+Generating the localedata files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, make sure `click <http://click.pocoo.org>`_ is installed (it is a
+dependency only for the `glcp` tool and will not be installed by default):
+
+.. code-block:: sh
+
+   $ pip install click
+
+Afterwards, if you haven't done so, checkout the glibc-submodule:
+
+.. code-block:: sh
+
+   git submodule update --init --recursive
+
+Now the ``glcp`` tool can be used to generate the necessary ``localedata``.
+
+.. code-block:: sh
+
+   $ mkdir slugger/localedata
+   $ glcp -o slugger/localedata glibc/localedata/locales/*
+
+
 License
 -------
 
