@@ -9,8 +9,8 @@ def read(fname):
 
 setup(name='slugger',
       version='0.2dev',
-      description="""Slugging done right. Tries to support close to 300
-                     languages.""",
+      description=('Slugging done right. Tries to support close to 300'
+                   'languages.'),
       long_description=read('README.rst'),
       keywords='slug slugging web i18n',
       author='Marc Brinkmann',
