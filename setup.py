@@ -19,7 +19,7 @@ class locale_sdist(sdist):
         sdist.run(self)
 
 
-devtools_req = ['click', 'remember', 'logbook']
+devtools_req = ['click', 'remember', 'logbook', 'unihandecode']
 setup(name='slugger',
       version='0.2.dev1',
       description=('Slugging done right. Tries to support close to 300'
