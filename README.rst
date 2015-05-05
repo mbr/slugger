@@ -1,5 +1,6 @@
 Slugger is slugging done right
 ==============================
+
 Slugger solves the "simple" problem of turning a title of a title like
 *Headless body in topless bar* into a slug: *headless-body-in-topless-bar*.
 
@@ -8,6 +9,7 @@ have a maximum length a reduced character set that is highly URL-friendly.
 
 Transcribing
 -----------
+
 Many languages have special rules for transcribing phrases that fall
 outside the `ISO basic Latin alphabet
 <http://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet>`_, which vary from
@@ -25,6 +27,7 @@ In this case, the "ä" is simply replaced with an "a", no extra letters.
 
 Character substitution
 ----------------------
+
 Slugger also supports replacing characters with words where appropriate. For
 example, *Me & You* is better sluggified as "Me-and-You" or "me-and-you",
 instead of just dropping the and-sign. Of course, in French, the phrase "Toi et
@@ -32,6 +35,7 @@ Moi" would properly sluggified as "toi-et-moi".
 
 External libraries
 ------------------
+
 There are very few actual rules inside the library itself, most data is taken
 from external languages. These are:
 
@@ -49,8 +53,10 @@ specific substitutions at all.
 
 Additional fixes are contained in slugger itself.
 
+
 Usage
 =====
+
 Detailed docs are still missing. Here is a quick example::
 
     from slugger import Slugger
@@ -67,12 +73,15 @@ better underlying libraries or fixes in Slugger itself.
 
 Installation
 ------------
+
 You cannot use Slugger straight from a checkout of the repository, as
 *glibc*-localedata has to be parsed and pickled first. When installing a
 release from `PyPi <http://pypi.python.org>`_, this data is already included.
 
+
 Development
 ===========
+
 Development takes places on `GitHub <https://github.com>`_, see
 <https://github.com/mbr/slugger>.
 
@@ -86,5 +95,6 @@ you find a generated slug unsatisfactionary, please `let me know
 
 License
 -------
+
 Slugger is licensed under the LGPL license like *glibc*, as it uses an integral
 part of that library (the localedata information).
