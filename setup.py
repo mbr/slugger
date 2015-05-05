@@ -19,7 +19,15 @@ setup(name='slugger',
       license='LGPLv2.1',
       install_requires=['remember', 'logbook', 'unihandecode'],
       include_package_data=True,
-      packages=find_packages(exclude=['glibcparse']),
+      packages=find_packages(exclude=['tests']),
+      extras_require = {
+          'devtools': ['click'],
+      },
+      entry_points = {
+          'console_scripts': [
+              'glcp = slugger.glibcparse.cli:main [devtools]',
+          ]
+      },
       classifiers=[
           'Programming Language :: Python :: 2',
           #'Programming Language :: Python :: 3',

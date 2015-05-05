@@ -5,7 +5,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-from exc import TokenizerError
+from .exc import TokenizerError
 
 KEYWORDS = ('LC_IDENTIFICATION', 'LC_CTYPE', 'LC_COLLATE', 'LC_TIME',
             'LC_NUMERIC', 'LC_MONETARY', 'LC_MESSAGES', 'LC_PAPER', 'LC_NAME',
