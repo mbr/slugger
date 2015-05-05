@@ -41,5 +41,22 @@ necessary to store the generated slug in addition to the title if you keep a
 database of those.
 
 
+Filenames
+---------
+
+After a slug has been generated, all remaining invalid characters left over are
+filtered out using a regular expression that is URL and filename safe (this
+behavior can be altered using the ``invalid_pattern`` parameter of the
+:class:`~slugger.Slugger` constructor). This makes it also convenient for
+sanitizing filenames:
+
+.. code-block:: python
+
+   fn = os.path.join('base/dir/userx', s.sluggify(user_supplied_filename))
+
+
+API reference
+-------------
+
 .. autoclass:: slugger.Slugger
    :members:
