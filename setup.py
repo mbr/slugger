@@ -47,4 +47,5 @@ setup(name='slugger',
           #'Programming Language :: Python :: 3',  # no python 3 support yet
       ],
       cmdclass={'sdist': locale_sdist},
+      zip_safe=False,
       )
