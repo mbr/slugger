@@ -52,7 +52,7 @@ Now the ``glcp`` tool can be used to generate the necessary ``localedata``.
 
 .. code-block:: sh
 
-   $ mkdir slugger/localedata
+   $ mkdir -p slugger/localedata
    $ glcp -o slugger/localedata glibc/localedata/locales/*
 
 
