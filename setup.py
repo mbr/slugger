@@ -20,7 +20,7 @@ class locale_sdist(sdist):
 
 
 setup(name='slugger',
-      version='0.2dev',
+      version='0.2.dev1',
       description=('Slugging done right. Tries to support close to 300'
                    'languages.'),
       long_description=read('README.rst'),
