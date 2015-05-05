@@ -22,7 +22,7 @@ class locale_sdist(sdist):
 devtools_req = ['click', 'remember', 'logbook', 'unihandecode>=0.50']
 setup(name='slugger',
       version='0.2',
-      description=('Slugging done right. Tries to support close to 300'
+      description=('Slugging done right. Tries to support close to 300 '
                    'languages.'),
       long_description=read('README.rst'),
       keywords='slug slugging web i18n',
