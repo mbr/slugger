@@ -22,6 +22,6 @@ setup(name='slugger',
       packages=find_packages(exclude=['glibcparse']),
       classifiers=[
           'Programming Language :: Python :: 2',
-          'Programming Language :: Python :: 3',
+          #'Programming Language :: Python :: 3',
       ]
       )
