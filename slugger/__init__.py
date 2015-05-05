@@ -139,7 +139,7 @@ class Slugger(object):
                  hanlang=None,
                  lowercase=True,
                  maxlength=100,
-                 invalid_pattern='[^A-Za-z-]+',
+                 invalid_pattern='[^A-Za-z0-9-]+',
                  invalid_replacement='-'):
         self.lang = lang
         self.hanlang = hanlang
