@@ -16,7 +16,7 @@ class locale_sdist(sdist):
             from slugger.glibcparse.cli import main
             main(glob('glibc/localedata/locales/*'), standalone_mode=False)
 
-        sdist.run(self)
+        return sdist.run(self)
 
 
 devtools_req = ['click', 'remember', 'logbook', 'unihandecode>=0.50']
