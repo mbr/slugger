@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding=utf8
-
 import re
 
 PREFACE_RE = re.compile(

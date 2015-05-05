@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding=utf8
-
 """Main slugger module. See the docstring of Slugger for details."""
 
 __version__ = '0.2dev'

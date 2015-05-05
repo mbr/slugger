@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding=utf8
-
 from logbook import Logger
 
 from exc import ParserError
