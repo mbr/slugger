@@ -8,7 +8,6 @@ __version__ = '0.2dev'
 import bz2
 import imp
 import re
-import os
 import sys
 
 from remember.memoize import memoize
@@ -26,9 +25,9 @@ except ImportError:
 
 
 _MEMOIZE = 20
-
-
 _LANGCODE_RE = re.compile('^([a-z]+)(?:_([A-Z]+).*)?$')
+
+
 @memoize(_MEMOIZE)
 def _split_language(lang_code):
     m = _LANGCODE_RE.match(lang_code)
@@ -71,10 +70,11 @@ def _load_language(lang):
             pass
 
     if not mod:
-        raise LanguageNotFoundError('Could not find language module for %s' % \
+        raise LanguageNotFoundError('Could not find language module for %s' %
                                     (lang,))
 
     return mod
+
 
 @memoize(_MEMOIZE)
 def _load_ttbl(lang):
@@ -103,8 +103,9 @@ def _load_ttbl(lang):
 
             return pickle.loads(buf)
 
-    raise LanguageNotFoundError('Could not find translation table for %s' % \
+    raise LanguageNotFoundError('Could not find translation table for %s' %
                                 lang)
+
 
 @memoize(_MEMOIZE)
 def _compile_rpl_exp(tbl):

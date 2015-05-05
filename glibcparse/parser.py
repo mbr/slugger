@@ -5,6 +5,7 @@ from logbook import Logger
 
 from exc import ParserError
 
+
 class BaseParser(object):
     @property
     def lineno(self):
@@ -17,9 +18,8 @@ class BaseParser(object):
     def _expect(self, *args):
         t = self.tokens.next()
         if not args == t[:len(args)]:
-            raise ParserError(self, 'Expected %s, got %s instead' % \
-                (args, t)
-            )
+            raise ParserError(self, 'Expected %s, got %s instead' %
+                              (args, t))
         return t
 
 
@@ -62,6 +62,7 @@ class BlockParser(BaseParser):
 
 class TranslitParser(BlockParser):
     log = Logger('TranslitParser')
+
     def __init__(self, parse_func, *args, **kwargs):
         super(TranslitParser, self).__init__(*args, **kwargs)
         self.parse_func = parse_func
@@ -140,7 +141,7 @@ class TranslitParser(BlockParser):
                         continue
 
                     if not 'STRING' == t[0]:
-                        raise ParserError(self, 'string expected, found %r'\
+                        raise ParserError(self, 'string expected, found %r'
                                                 'instead' % (t,))
                     current_group.append(t[1])
 
@@ -161,12 +162,11 @@ class TranslitParser(BlockParser):
                     assert len(groups[-1]) == 1
 
                     if len(groups) > 2:
-                        self.log.warning('Unhandled leftover substitutions: '\
+                        self.log.warning('Unhandled leftover substitutions: '
                                          '%s' % groups)
 
                 for l in lhs:
                     self.ttbl[l] = rhs
-
 
         if inside_translit:
             raise ParserError(self, 'translit_end not found')

@@ -39,8 +39,10 @@ from glibcparse.exc import LException
 
 log = logbook.Logger('main')
 
+
 def parse_translit(fn):
     return _parse_translit(os.path.normpath(os.path.abspath(fn)))
+
 
 @memoize(100)
 def _parse_translit(fn):
@@ -104,8 +106,8 @@ if '__main__' == __name__:
         ).push_application()
 
         if not has_memoize:
-            log.error('You do not have remember (from PyPi) installed. This '\
-                      'program will still work, but large jobs will run about'\
+            log.error('You do not have remember (from PyPi) installed. This '
+                      'program will still work, but large jobs will run about'
                       ' 10x slower')
 
         log.info('Storing output in %s' % args.output_dir)
@@ -118,7 +120,7 @@ if '__main__' == __name__:
             else:
                 ttbl, parser = parse_translit(fn)
                 if not parser.has_LC_IDENITIFCATION:
-                    log.warning('No LC_IDENTIFICATION in "%s", skipping' %\
+                    log.warning('No LC_IDENTIFICATION in "%s", skipping' %
                                 fn)
                 else:
                     ext = '.ttbl' if not args.compress else '.ttbl.bz2'
@@ -128,7 +130,7 @@ if '__main__' == __name__:
                     log.info('Writing output to %s' % out_fn)
 
                     outfile = open(out_fn, 'w') if not args.compress else\
-                              bz2.BZ2File(out_fn, 'w', 1024**2, 9)
+                        bz2.BZ2File(out_fn, 'w', 1024**2, 9)
                     try:
                         pickle.dump(ttbl, outfile, pickle.HIGHEST_PROTOCOL)
                     finally:

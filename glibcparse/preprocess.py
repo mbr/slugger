@@ -7,6 +7,7 @@ PREFACE_RE = re.compile(
     '^(\s*(?:escape_char|comment_char)\s*.\s*\n)*'
 )
 
+
 def strip_comments(comment_char, escape_char, string_delim, i):
     inside_string = False
     escaped = False
@@ -56,12 +57,8 @@ def preprocess(buf):
     else:
         i = iter(buf)
 
-    return escape_char,\
-           string_delim,\
-           strip_comments(comment_char,
-                          escape_char,
-                          string_delim,
-                          i)
+    return (escape_char, string_delim,
+            strip_comments(comment_char, escape_char, string_delim, i))
 
 
 class Screener(object):

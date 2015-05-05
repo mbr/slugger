@@ -17,12 +17,15 @@ KEYWORDS = ('LC_IDENTIFICATION', 'LC_CTYPE', 'LC_COLLATE', 'LC_TIME',
             'default_missing')
 
 _U_RE = re.compile('<U([0-9A-F]+)>')
+
+
 def _uni_sub(s):
     def _u_repl(m):
         code_point = int(m.group(1), 16)
         return unichr(code_point)
 
     return _U_RE.sub(_u_repl, s)
+
 
 class Tokenizer(object):
     def __init__(self, scrn):
