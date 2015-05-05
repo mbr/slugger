@@ -39,3 +39,7 @@ versions, as the goal of this library is to steadily improve, either through
 better underlying libraries or fixes in Slugger itself. It is therefore
 necessary to store the generated slug in addition to the title if you keep a
 database of those.
+
+
+.. autoclass:: slugger.Slugger
+   :members:

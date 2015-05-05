@@ -114,6 +114,25 @@ def _compile_rpl_exp(tbl):
 
 
 class Slugger(object):
+    """Creates a new configuration for slugging.
+
+    Creating a new slugger is somewhat expensive, as the character translation
+    tables need to be loaded. Reuse as much as possible.
+
+    :param lang: The language to use. Valid examples: ``'de'``, ``'de_DE'``,
+                 ``'jp_JA'``. If a language is not found Slugger falls back to
+                 English.
+    :param chain: Chain of replacement operations. If ``None``, use language
+                  default.
+    :param hanlang: The language to use for transcribing chinese characters.
+                    Used on mixed-language e.g. English text with Kanji mixed
+                    in to force Japanese instead of Chinese reading.
+    :param lowercase: Convert slug to lowercase.
+    :param maxlength: Maximum length. Tries to keep words intact if possible.
+    :param invalid_pattern: Regular expression used to find invalid characters
+                            which are leftover after processing.
+    :param invalid_replacement: The replacement for invalid chracters.
+    """
     def __init__(self,
                  lang,
                  chain=None,
@@ -122,38 +141,6 @@ class Slugger(object):
                  maxlength=100,
                  invalid_pattern='[^A-Za-z-]+',
                  invalid_replacement='-'):
-        """Creates a new configuration for slugging.
-
-        Note that creating Slugger instances can be expensive, if possible it
-        should be avoided to repeat creating these everytime a slug is needed
-        with the same configuration.
-
-        :param lang: The language to use. Expects a language or
-                     language_TERRITORY code, like 'de' or 'de_DE' (German,
-                     German in Germany) or 'jp_JA' (Japanese in Japan).
-
-                     If a language is not found, errors are silently swallowed
-                     and the Slugger falls back to a basic default language.
-        :param chain: A chain of operations. Each language comes with a default
-                      chain, a list of strings. Upon instantiation,
-                      init_CHAINNAME methods are called, while
-                      :py:method:`sluggify` will call do_CHAINNAME to do its
-                      work.
-        :param hanlang: The language to use for transcribing chinese
-                        characters, which are used in numerous asian languages.
-                        This is mainly used when you have mixed-language input
-                        and want better control, e.g. when having an English
-                        text with Kanji mixed in and you want them interpreted
-                        as Japanese, not Chinese.
-        :param lowercase: Convert slug to lowercase..
-        :param maxlength: Maximum length. Slugger will cut the slug short,
-                          trying to keep words intact if possible.
-        :param invalid_pattern: In the final step, this regular expression is
-                                used to find invalid characters which are
-                                replaced with *invalid-replacement*.
-        :param invalid_replacement: The replacement for *invalid-pattern*-found
-                                    characters.
-        """
         self.lang = lang
         self.hanlang = hanlang
         self.lowercase = lowercase
