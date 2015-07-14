@@ -21,7 +21,7 @@ class locale_sdist(sdist):
 
 devtools_req = ['click', 'remember', 'logbook', 'unihandecode>=0.50']
 setup(name='slugger',
-      version='0.2.2.dev1',
+      version='0.2.3.dev1',
       description=('Slugging done right. Tries to support close to 300 '
                    'languages.'),
       long_description=read('README.rst'),
