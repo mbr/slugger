@@ -217,16 +217,21 @@ class Slugger(object):
         self.ttbl_sub = _compile_rpl_exp(self.ttbl)
 
     def init_unihandecode(self):
-        hanlang = self.hanlang or self.lang[0:2]
+        if self.hanlang is None:
+            # unihandecode will happily look for "en" codepoints, default to
+            # a language we know is in unihandecode
+            hanlang = 'ja'
+        else:
+            hanlang = self.hanlang or self.lang[0:2]
 
-        # work-around for annoying bugs in unihandecode
-        # author has been emailed
-        if hanlang == 'ja':
-            hanlang = "ja"
-        elif hanlang == 'kr':
-            hanlang = "kr"
-        elif hanlang == 'vn':
-            hanlang = "vn"
+            # work-around for annoying bugs in unihandecode
+            # author has been emailed
+            if hanlang == 'ja':
+                hanlang = "ja"
+            elif hanlang == 'kr':
+                hanlang = "kr"
+            elif hanlang == 'vn':
+                hanlang = "vn"
 
         self.unihandecoder = unihandecode.Unihandecoder(lang=hanlang)
 
